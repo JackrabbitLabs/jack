@@ -13,12 +13,14 @@
 # ******************************************************************************
 
 CC=gcc
-CFLAGS= -g3 -O0 -Wall -Wextra
-MACROS=-D JACK_VERBOSE
-INCLUDE_DIR=/usr/local/include
-LIB_DIR=/usr/local/lib
-INCLUDE_PATH=-I $(INCLUDE_DIR) -I /usr/include/glib-2.0 -I /usr/lib/`uname -m`-linux-gnu/glib-2.0/include/
-LIB_PATH=-L $(LIB_DIR)
+CFLAGS?= -g3 -O0 -Wall -Wextra
+MACROS?=-D JACK_VERBOSE
+INCLUDE_DIR?=/usr/local/include
+LIB_DIR?=/usr/local/lib
+LOCAL_INCLUDE_DIR?=./include
+LOCAL_LIB_DIR?=./lib
+INCLUDE_PATH=-I $(LOCAL_INCLUDE_DIR) -I $(INCLUDE_DIR) -I /usr/include/glib-2.0 -I /usr/lib/`uname -m`-linux-gnu/glib-2.0/include/ -I /usr/lib64/glib-2.0/include 
+LIB_PATH=-L $(LOCAL_LIB_DIR) -L $(LIB_DIR)
 LIBS=-l mctp -l fmapi -l emapi -l ptrqueue -l arrayutils -l uuid -l timeutils -l cxlstate -l pciutils
 TARGET=jack
 
@@ -52,8 +54,12 @@ install: jack
 	sudo cp $(TARGET) /usr/local/bin/
 	sudo cp completion.bash /etc/bash_completion.d/$(TARGET)-completion.bash
 
+uninstall:
+	sudo rm /usr/local/bin/$(TARGET)
+	sudo rm /etc/bash_completion.d/$(TARGET)-completion.bash
+
 # List all non file name targets as PHONY
-.PHONY: all clean doc install
+.PHONY: all clean doc install uninstall
 
 # Variables 
 # $^ 	Will expand to be all the sensitivity list
