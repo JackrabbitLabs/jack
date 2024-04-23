@@ -231,10 +231,10 @@ void print_ports(struct fmapi_psc_port_rsp *o)
 			sprintf(&buf[i], "-");
 		else 
 		{
-			if ((p->nlw >> 0) == 0)
+			if (p->nlw == 0)
 				sprintf(&buf[i], "%d", p->mlw);
 			else 
-				sprintf(&buf[i], "%d", p->nlw >> 4);
+				sprintf(&buf[i], "%d", p->nlw);
 		}
 		i += (cols[k++].width + 2);
 
@@ -254,7 +254,7 @@ void print_ports(struct fmapi_psc_port_rsp *o)
 			sprintf(&buf[i], "-");
 		else 
 		{
-			char c = '0';
+			char c = '1';
 			for ( int v = 0 ; v < 8 ; v++ )
 			{
 				if ((p->speeds >> v) & 0x01)
@@ -701,11 +701,11 @@ int fmapi_handler(struct mctp *m, struct mctp_msg *mr, struct mctp_msg *mm)
 			struct fmapi_isc_id_rsp *o = &rsp.obj.isc_id_rsp;
 
 			printf("Show Identity:\n");
-			printf("PCIe Vendor ID:           0x%x\n", 		o->vid);
-			printf("PCIe Device ID:           0x%x\n", 		o->did);
-			printf("PCIe Subsystem Vendor ID: 0x%x\n", 		o->svid);
-			printf("PCIe Subsystem ID:        0x%x\n", 		o->ssid);
-			printf("SN:                       0x%llx\n", 	o->sn);
+			printf("PCIe Vendor ID:           0x%04x\n", 	o->vid);
+			printf("PCIe Device ID:           0x%04x\n", 	o->did);
+			printf("PCIe Subsystem Vendor ID: 0x%04x\n", 	o->svid);
+			printf("PCIe Subsystem ID:        0x%04x\n", 	o->ssid);
+			printf("SN:                       0x%016llx\n",	o->sn);
 			printf("Max Msg Size n of 2^n:    %d - %d B\n", o->size, 1 << o->size);
 		}
 			break;
@@ -766,7 +766,7 @@ int fmapi_handler(struct mctp *m, struct mctp_msg *mr, struct mctp_msg *mm)
 		case FMOP_PSC_CFG:
 		{
 			struct fmapi_psc_cfg_rsp *o = &rsp.obj.psc_cfg_rsp;
-			printf("Data: 0x%02x%02x%02x%02x\n", o->data[0], o->data[1], o->data[2], o->data[3]);
+			printf("Data: 0x%02x%02x%02x%02x\n", o->data[3], o->data[2], o->data[1], o->data[0]);
 		}
 			break;
 
@@ -836,7 +836,7 @@ int fmapi_handler(struct mctp *m, struct mctp_msg *mr, struct mctp_msg *mm)
 		{
 			if (rsp.hdr.return_code == FMRC_BACKGROUND_OP_STARTED) 
 			{
-				printf("Bind operation started in the background\n");
+				//printf("Bind operation started in the background\n");
 			}
 		}
 			break;
@@ -845,7 +845,7 @@ int fmapi_handler(struct mctp *m, struct mctp_msg *mr, struct mctp_msg *mm)
 		{
 			if (rsp.hdr.return_code == FMRC_BACKGROUND_OP_STARTED) 
 			{
-				printf("Unbind operation started in the background\n");
+				//printf("Unbind operation started in the background\n");
 			}
 		}
 			break;

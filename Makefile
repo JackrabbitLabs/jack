@@ -21,7 +21,7 @@ LOCAL_INCLUDE_DIR?=./include
 LOCAL_LIB_DIR?=./lib
 INCLUDE_PATH=-I $(LOCAL_INCLUDE_DIR) -I $(INCLUDE_DIR) -I /usr/include/glib-2.0 -I /usr/lib/`uname -m`-linux-gnu/glib-2.0/include/ -I /usr/lib64/glib-2.0/include 
 LIB_PATH=-L $(LOCAL_LIB_DIR) -L $(LIB_DIR)
-LIBS=-l mctp -l fmapi -l emapi -l ptrqueue -l arrayutils -l uuid -l timeutils -l cxlstate -l pciutils
+LIBS=-l mctp -l fmapi -l emapi -l ptrqueue -l arrayutils -l uuid -l timeutils -l cxlstate -l pciutils -l pci
 TARGET=jack
 
 all: $(TARGET)

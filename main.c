@@ -272,8 +272,8 @@ void run(struct mctp *m)
 		goto end;
 
 	// Initialize cached copy of remote switch state 
-	if (opts[CLOP_NO_INIT].set == 0)
-		init_switch(m);
+	//if (opts[CLOP_NO_INIT].set == 0)
+	//	init_switch(m);
 
 	if (opts[CLOP_CMD].val == CLCM_LIST)
 		list(m);

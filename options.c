@@ -108,7 +108,7 @@ static int pr_set_qos_limit(int key, char *arg, struct argp_state *state);
  */
 struct opt *opts;
 
-const char *argp_program_version = "version 0.1";
+const char *argp_program_version = "version 0.2";
 const char *argp_program_bug_address = "code@jrlabs.io";
 
 /**
